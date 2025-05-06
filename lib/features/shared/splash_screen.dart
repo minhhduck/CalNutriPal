@@ -69,10 +69,10 @@ class _SplashScreenState extends State<SplashScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Spacer(flex: 2),
-                const Icon(
-                  Icons.local_dining,
-                  size: 100,
-                  color: Colors.white,
+                Image.asset(
+                  'assets/images/app_logo.png',
+                  width: 150,
+                  height: 150,
                 ),
                 const SizedBox(height: 20),
                 const Text(

@@ -1,16 +1,39 @@
-# cal_nutri_pal
+# CalNutriPal
 
-A new Flutter project.
+A mobile application to track daily nutrition and calories.
+
+![CalNutriPal Logo](assets/images/app_logo.png)
+
+## Features
+
+- Track daily food intake and nutrition
+- Monitor calorie goals and macronutrient distribution
+- Personal profile with body stats and progress tracking
+- Dashboard with nutrition insights and summaries
+- Reports and analytics for your health journey
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+This project uses Flutter and Firebase for analytics.
 
-A few resources to get you started if this is your first Flutter project:
+### Prerequisites
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- Flutter SDK
+- Dart
+- iOS or Android development environment
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Installation
+
+1. Clone this repository
+2. Run `flutter pub get` to install dependencies
+3. Run `flutter run` to start the app on your device or emulator
+
+## App Structure
+
+- **Core**: Models, services, and repositories
+- **Features**: UI screens organized by feature
+- **Shared**: Reusable components, themes, and utilities
+
+## License
+
+This project is proprietary and not licensed for public use.

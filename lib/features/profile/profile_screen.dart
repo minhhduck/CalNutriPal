@@ -648,10 +648,10 @@ class _ProfileScreenState extends State<ProfileScreen>
       alignment: Alignment.center,
       child: Column(
         children: [
-          const Icon(
-            Icons.local_dining,
-            size: 60,
-            color: AppTheme.primaryColor,
+          Image.asset(
+            'assets/images/app_logo.png',
+            width: 80,
+            height: 80,
           ),
           const SizedBox(height: 8),
           const Text(
