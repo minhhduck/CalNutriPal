@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>196652305718-f2e8uesvrpbgsqcuigled4fc482kdo2l.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.196652305718-f2e8uesvrpbgsqcuigled4fc482kdo2l</string>
+	<key>API_KEY</key>
+	<string>AIzaSyD2-v4dyw13ZH7vxGHmcPPEKput9aTfqaI</string>
+	<key>GCM_SENDER_ID</key>
+	<string>196652305718</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.calNutriPal</string>
+	<key>PROJECT_ID</key>
+	<string>calnutripaltesting</string>
+	<key>STORAGE_BUCKET</key>
+	<string>calnutripaltesting.firebasestorage.app</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:196652305718:ios:04407fd0572abd7336f797</string>
+</dict>
+</plist>
