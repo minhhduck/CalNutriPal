@@ -2,51 +2,149 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>CFBundleDevelopmentRegion</key>
-	<string>$(DEVELOPMENT_LANGUAGE)</string>
-	<key>CFBundleDisplayName</key>
-	<string>Cal Nutri Pal</string>
-	<key>CFBundleExecutable</key>
-	<string>$(EXECUTABLE_NAME)</string>
-	<key>CFBundleIdentifier</key>
-	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
-	<key>CFBundleInfoDictionaryVersion</key>
-	<string>6.0</string>
-	<key>CFBundleName</key>
-	<string>cal_nutri_pal</string>
-	<key>CFBundlePackageType</key>
-	<string>APPL</string>
-	<key>CFBundleShortVersionString</key>
-	<string>$(FLUTTER_BUILD_NAME)</string>
-	<key>CFBundleSignature</key>
-	<string>????</string>
-	<key>CFBundleVersion</key>
-	<string>$(FLUTTER_BUILD_NUMBER)</string>
-	<key>LSRequiresIPhoneOS</key>
-	<true/>
-	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen</string>
-	<key>UIMainStoryboardFile</key>
-	<string>Main</string>
-	<key>UISupportedInterfaceOrientations</key>
-	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>
-	<key>UISupportedInterfaceOrientations~ipad</key>
-	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationPortraitUpsideDown</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>
-	<key>CADisableMinimumFrameDurationOnPhone</key>
-	<true/>
-	<key>UIApplicationSupportsIndirectInputEvents</key>
-	<true/>
-	<key>ITSAppUsesNonExemptEncryption</key>
-<false/>
+        <key>CFBundleDevelopmentRegion</key>
+        <string>$(DEVELOPMENT_LANGUAGE)</string>
+        <key>CFBundleDisplayName</key>
+        <string>Cal Nutri Pal</string>
+        <key>CFBundleExecutable</key>
+        <string>$(EXECUTABLE_NAME)</string>
+        <key>CFBundleIdentifier</key>
+        <string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+        <key>CFBundleInfoDictionaryVersion</key>
+        <string>6.0</string>
+        <key>CFBundleName</key>
+        <string>cal_nutri_pal</string>
+        <key>CFBundlePackageType</key>
+        <string>APPL</string>
+        <key>CFBundleShortVersionString</key>
+        <string>$(FLUTTER_BUILD_NAME)</string>
+        <key>CFBundleSignature</key>
+        <string>????</string>
+        <key>CFBundleVersion</key>
+        <string>$(FLUTTER_BUILD_NUMBER)</string>
+        <key>LSRequiresIPhoneOS</key>
+        <true/>
+        <key>UILaunchStoryboardName</key>
+        <string>LaunchScreen</string>
+        <key>UIMainStoryboardFile</key>
+        <string>Main</string>
+        <key>UISupportedInterfaceOrientations</key>
+        <array>
+                <string>UIInterfaceOrientationPortrait</string>
+                <string>UIInterfaceOrientationLandscapeLeft</string>
+                <string>UIInterfaceOrientationLandscapeRight</string>
+        </array>
+        <key>UISupportedInterfaceOrientations~ipad</key>
+        <array>
+                <string>UIInterfaceOrientationPortrait</string>
+                <string>UIInterfaceOrientationPortraitUpsideDown</string>
+                <string>UIInterfaceOrientationLandscapeLeft</string>
+                <string>UIInterfaceOrientationLandscapeRight</string>
+        </array>
+        <key>CADisableMinimumFrameDurationOnPhone</key>
+        <true/>
+        <key>UIApplicationSupportsIndirectInputEvents</key>
+        <true/>
+        <key>ITSAppUsesNonExemptEncryption</key>
+        <false/>
+        
+        <!-- Privacy Policy URL -->
+        <key>NSPrivacyPolicyURLString</key>
+        <string>https://minhhduck.github.io/CalNutriPal/privacy/</string>
+        
+        <!-- Support URL -->
+        <key>NSAppSupportURLString</key>
+        <string>https://minhhduck.github.io/CalNutriPal/support/</string>
+        
+        <!-- Copyright Information -->
+        <key>NSHumanReadableCopyright</key>
+        <string>© 2023 CalNutriPal</string>
+        
+        <!-- Data Types Collected -->
+        <key>NSPrivacyCollectedDataTypes</key>
+        <array>
+                <dict>
+                        <key>NSPrivacyCollectedDataType</key>
+                        <string>NSPrivacyCollectedDataTypeContact</string>
+                        <key>NSPrivacyCollectedDataTypeLinked</key>
+                        <true/>
+                        <key>NSPrivacyCollectedDataTypeTracking</key>
+                        <false/>
+                        <key>NSPrivacyCollectedDataTypePurposes</key>
+                        <array>
+                                <string>NSPrivacyCollectedDataTypePurposeAppFunctionality</string>
+                        </array>
+                </dict>
+                <dict>
+                        <key>NSPrivacyCollectedDataType</key>
+                        <string>NSPrivacyCollectedDataTypeHealth</string>
+                        <key>NSPrivacyCollectedDataTypeLinked</key>
+                        <true/>
+                        <key>NSPrivacyCollectedDataTypeTracking</key>
+                        <false/>
+                        <key>NSPrivacyCollectedDataTypePurposes</key>
+                        <array>
+                                <string>NSPrivacyCollectedDataTypePurposeAppFunctionality</string>
+                        </array>
+                </dict>
+                <dict>
+                        <key>NSPrivacyCollectedDataType</key>
+                        <string>NSPrivacyCollectedDataTypeFitness</string>
+                        <key>NSPrivacyCollectedDataTypeLinked</key>
+                        <true/>
+                        <key>NSPrivacyCollectedDataTypeTracking</key>
+                        <false/>
+                        <key>NSPrivacyCollectedDataTypePurposes</key>
+                        <array>
+                                <string>NSPrivacyCollectedDataTypePurposeAppFunctionality</string>
+                        </array>
+                </dict>
+                <dict>
+                        <key>NSPrivacyCollectedDataType</key>
+                        <string>NSPrivacyCollectedDataTypeUserContent</string>
+                        <key>NSPrivacyCollectedDataTypeLinked</key>
+                        <true/>
+                        <key>NSPrivacyCollectedDataTypeTracking</key>
+                        <false/>
+                        <key>NSPrivacyCollectedDataTypePurposes</key>
+                        <array>
+                                <string>NSPrivacyCollectedDataTypePurposeAppFunctionality</string>
+                        </array>
+                </dict>
+                <dict>
+                        <key>NSPrivacyCollectedDataType</key>
+                        <string>NSPrivacyCollectedDataTypeAnalytics</string>
+                        <key>NSPrivacyCollectedDataTypeLinked</key>
+                        <false/>
+                        <key>NSPrivacyCollectedDataTypeTracking</key>
+                        <false/>
+                        <key>NSPrivacyCollectedDataTypePurposes</key>
+                        <array>
+                                <string>NSPrivacyCollectedDataTypePurposeAnalytics</string>
+                        </array>
+                </dict>
+        </array>
+        
+        <!-- APIs Accessed -->
+        <key>NSPrivacyAccessedAPITypes</key>
+        <array>
+                <dict>
+                        <key>NSPrivacyAccessedAPIType</key>
+                        <string>NSPrivacyAccessedAPICategoryFileAccess</string>
+                        <key>NSPrivacyAccessedAPITypeReasons</key>
+                        <array>
+                                <string>C617.1 - User content storage</string>
+                        </array>
+                </dict>
+                <dict>
+                        <key>NSPrivacyAccessedAPIType</key>
+                        <string>NSPrivacyAccessedAPICategoryUserDefaults</string>
+                        <key>NSPrivacyAccessedAPITypeReasons</key>
+                        <array>
+                                <string>CA92.1 - Store user preferences</string>
+                        </array>
+                </dict>
+        </array>
 
 </dict>
-</plist>
+</plist> 
