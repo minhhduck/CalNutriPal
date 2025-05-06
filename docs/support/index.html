@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support - CalNutriPal</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        header img {
+            max-width: 100px;
+            height: auto;
+            margin-bottom: 20px;
+        }
+        h1 {
+            color: #4CAF50;
+            margin-bottom: 10px;
+        }
+        h2 {
+            color: #4CAF50;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        h3 {
+            color: #4CAF50;
+            margin-top: 25px;
+            cursor: pointer;
+        }
+        h3::after {
+            content: "+";
+            float: right;
+            transition: transform 0.3s;
+        }
+        h3.active::after {
+            content: "-";
+        }
+        .faq-answer {
+            display: none;
+            padding: 0 0 0 20px;
+            margin-bottom: 20px;
+        }
+        p {
+            margin-bottom: 15px;
+        }
+        .contact-methods {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .contact-method {
+            flex: 1;
+            min-width: 250px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .contact-method h3 {
+            margin-top: 0;
+            cursor: default;
+        }
+        .contact-method h3::after {
+            content: none;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 30px;
+            color: #4CAF50;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            color: #757575;
+            font-size: 14px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img src="https://raw.githubusercontent.com/minhhduck/CalNutriPal/main/assets/images/app_logo.png" alt="CalNutriPal Logo">
+            <h1>Support Center</h1>
+            <p>Get help with CalNutriPal</p>
+        </header>
+
+        <section>
+            <h2>Contact Us</h2>
+            <p>We're here to help you with any questions or issues you may have about CalNutriPal.</p>
+            
+            <div class="contact-methods">
+                <div class="contact-method">
+                    <h3>Email Support</h3>
+                    <p>For general inquiries and support:</p>
+                    <p><a href="mailto:support@calnutripal.com">support@calnutripal.com</a></p>
+                    <p>We typically respond within 24-48 hours.</p>
+                </div>
+                
+                <div class="contact-method">
+                    <h3>Bug Reports</h3>
+                    <p>Found a bug? Let us know:</p>
+                    <p><a href="mailto:bugs@calnutripal.com">bugs@calnutripal.com</a></p>
+                    <p>Please include your device model and app version.</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Frequently Asked Questions</h2>
+            
+            <div class="faq-item">
+                <h3>How do I create a meal plan?</h3>
+                <div class="faq-answer">
+                    <p>To create a meal plan in CalNutriPal:</p>
+                    <ol>
+                        <li>Go to the Food Log tab</li>
+                        <li>Tap the "+" button to add a meal</li>
+                        <li>Choose meal type (breakfast, lunch, dinner, snack)</li>
+                        <li>Add food items from our database or create custom items</li>
+                        <li>Save your meal</li>
+                    </ol>
+                    <p>You can view your daily nutrition totals on the Dashboard.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <h3>How do I set nutrition goals?</h3>
+                <div class="faq-answer">
+                    <p>To set custom nutrition goals:</p>
+                    <ol>
+                        <li>Go to the Profile tab</li>
+                        <li>Scroll to the Nutrition Goals section</li>
+                        <li>Tap the edit icon next to any goal</li>
+                        <li>Enter your desired values for calories, proteins, carbs, and fats</li>
+                        <li>Save your changes</li>
+                    </ol>
+                    <p>The app will automatically track your progress toward these goals.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <h3>How do I update my body stats?</h3>
+                <div class="faq-answer">
+                    <p>To update your body stats:</p>
+                    <ol>
+                        <li>Go to the Profile tab</li>
+                        <li>Scroll to the Body Stats section</li>
+                        <li>Tap the edit icon</li>
+                        <li>Update your height, weight, age, or activity level</li>
+                        <li>Your BMI will automatically recalculate</li>
+                    </ol>
+                    <p>Regular updates help CalNutriPal provide more accurate recommendations.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <h3>Is my data private?</h3>
+                <div class="faq-answer">
+                    <p>Yes, your privacy is important to us. All personal and health data is stored securely and not shared with third parties. We use the data only to provide the services you expect from our app.</p>
+                    <p>For complete details, please read our <a href="../privacy/">Privacy Policy</a>.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <h3>How do I delete my account?</h3>
+                <div class="faq-answer">
+                    <p>To delete your account and all associated data:</p>
+                    <ol>
+                        <li>Go to the Profile tab</li>
+                        <li>Scroll to Account section</li>
+                        <li>Tap "Reset App Data"</li>
+                        <li>Confirm your choice</li>
+                    </ol>
+                    <p>This action cannot be undone. All your data will be permanently deleted.</p>
+                </div>
+            </div>
+        </section>
+
+        <a href="../" class="back-link">← Back to CalNutriPal Home</a>
+
+        <footer>
+            <p>&copy; 2023 CalNutriPal. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const faqItems = document.querySelectorAll('.faq-item h3');
+            
+            faqItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    const answer = this.nextElementSibling;
+                    if (answer.style.display === 'block') {
+                        answer.style.display = 'none';
+                    } else {
+                        answer.style.display = 'block';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html> 
