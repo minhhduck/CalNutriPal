@@ -8,6 +8,8 @@ import 'package:cal_nutri_pal/core/services/nutrition_goals_provider.dart';
 import 'package:cal_nutri_pal/core/models/user_stats_model.dart';
 import 'package:cal_nutri_pal/core/services/database_helper.dart';
 import 'package:cal_nutri_pal/core/services/app_routes.dart';
+import 'package:cal_nutri_pal/core/services/user_provider.dart';
+import 'package:cal_nutri_pal/features/privacy_policy/privacy_policy_screen.dart';
 
 /// Profile screen for displaying and editing user information
 class ProfileScreen extends StatefulWidget {
@@ -257,12 +259,6 @@ class _ProfileScreenState extends State<ProfileScreen>
               // App settings
               _buildSectionHeader('App Settings'),
               _buildAppSettings(),
-
-              const SizedBox(height: 24),
-
-              // Achievements
-              _buildSectionHeader('Achievements'),
-              _buildAchievements(),
 
               const SizedBox(height: 24),
 
@@ -543,17 +539,20 @@ class _ProfileScreenState extends State<ProfileScreen>
       ),
       child: Column(
         children: [
-          _buildOptionRow('Sync Data', Icons.sync, _syncData),
-          const Divider(height: 1),
           _buildOptionRow(
               'Privacy Settings', Icons.privacy_tip, _showPrivacySettings),
-          const Divider(height: 1),
-          _buildOptionRow('Change Password', Icons.lock, _showChangePassword),
           const Divider(height: 1),
           _buildOptionRow(
             'Reset App Data',
             Icons.delete_forever,
             _showResetConfirmationDialog,
+            isDestructive: true,
+          ),
+          const Divider(height: 1),
+          _buildOptionRow(
+            'Delete Account',
+            Icons.no_accounts,
+            _showDeleteAccountDialog,
             isDestructive: true,
           ),
         ],
@@ -588,54 +587,9 @@ class _ProfileScreenState extends State<ProfileScreen>
               trailing: Text(_selectedUnit,
                   style: TextStyle(color: Colors.grey.shade600))),
           const Divider(height: 1),
-          _buildSwitchRow('Dark Mode', Icons.dark_mode, _isDarkMode,
-              (value) => setState(() => _isDarkMode = value)),
-          const Divider(height: 1),
           _buildOptionRow('Help & Support', Icons.help, _showHelpSupport),
           const Divider(height: 1),
           _buildOptionRow('About', Icons.info, _showAboutInfo),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildAchievements() {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
-            spreadRadius: 1,
-            blurRadius: 4,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Column(
-        children: [
-          _buildAchievementRow('Logging Streak', '7 days', 0.7),
-          const Divider(height: 1),
-          _buildAchievementRow('Calories Goal', '5 days met', 0.5),
-          const Divider(height: 1),
-          _buildAchievementRow('Completed Profile', '80% complete', 0.8),
-          const Divider(height: 1),
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: TextButton(
-                onPressed: () {
-                  // Navigate to detailed achievements
-                },
-                child: const Text(
-                  'View All Achievements',
-                  style: TextStyle(color: AppTheme.primaryColor),
-                ),
-              ),
-            ),
-          ),
         ],
       ),
     );
@@ -648,11 +602,6 @@ class _ProfileScreenState extends State<ProfileScreen>
       alignment: Alignment.center,
       child: Column(
         children: [
-          Image.asset(
-            'assets/images/app_logo.png',
-            width: 80,
-            height: 80,
-          ),
           const SizedBox(height: 8),
           const Text(
             'CalNutriPal',
@@ -799,102 +748,114 @@ class _ProfileScreenState extends State<ProfileScreen>
     );
   }
 
-  Widget _buildAchievementRow(String title, String status, double progress) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              Text(
-                status,
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.grey.shade600,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          LinearProgressIndicator(
-            value: progress,
-            backgroundColor: Colors.grey.shade200,
-            valueColor:
-                const AlwaysStoppedAnimation<Color>(AppTheme.primaryColor),
-            minHeight: 8,
-            borderRadius: BorderRadius.circular(4),
-          ),
-        ],
-      ),
-    );
-  }
-
   // Methods for handling settings interactions
-  void _syncData() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Syncing data...')),
-    );
-  }
-
   void _showPrivacySettings() {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Privacy Settings'),
-        content: const Text('Privacy settings will be implemented here.'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Close'),
-          ),
-        ],
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const PrivacyPolicyScreen(),
       ),
     );
   }
 
-  void _showChangePassword() {
-    const inputFields = [
-      TextField(
-        obscureText: true,
-        decoration: InputDecoration(
-          labelText: 'Current Password',
-          border: OutlineInputBorder(),
-        ),
-      ),
-      SizedBox(height: 16),
-      TextField(
-        obscureText: true,
-        decoration: InputDecoration(
-          labelText: 'New Password',
-          border: OutlineInputBorder(),
-        ),
-      ),
-      SizedBox(height: 16),
-      TextField(
-        obscureText: true,
-        decoration: InputDecoration(
-          labelText: 'Confirm New Password',
-          border: OutlineInputBorder(),
-        ),
-      ),
-    ];
+  Future<void> _showResetConfirmationDialog() async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      barrierDismissible: false, // User must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Reset All App Data?'),
+          content: const SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('This action is irreversible.'),
+                Text(
+                    'All your logged meals, food items, stats, and goals will be permanently deleted.'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop(false); // Return false
+              },
+            ),
+            TextButton(
+              style: TextButton.styleFrom(foregroundColor: Colors.red),
+              child: const Text('Reset Data'),
+              onPressed: () {
+                Navigator.of(context).pop(true); // Return true
+              },
+            ),
+          ],
+        );
+      },
+    );
+
+    // If user confirmed, proceed with reset
+    if (confirmed == true) {
+      await _resetAppData();
+    }
+  }
+
+  /// Perform the actual data reset
+  Future<void> _resetAppData() async {
+    try {
+      // Show loading indicator (optional)
+      // Consider showing a loading overlay while clearing
+
+      // 1. Clear SharedPreferences
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.remove('user_stats');
+      await prefs.remove('nutrition_goals');
+      await prefs.remove('has_completed_onboarding');
+      // Add any other keys you store in SharedPreferences here
+      debugPrint("SharedPreferences cleared.");
+
+      // 2. Clear SQLite Database
+      final dbHelper = DatabaseHelper();
+      await dbHelper.clearAllData();
+
+      // 3. Reset relevant providers (optional, as navigation will rebuild anyway)
+      // Provider.of<UserStatsProvider>(context, listen: false).initialize();
+      // Provider.of<NutritionGoalsProvider>(context, listen: false).initialize();
+      // Provider.of<NutritionLogProvider>(context, listen: false).initialize();
+
+      // 4. Navigate back to the beginning
+      if (mounted) {
+        // Navigate to Splash which will then route to onboarding
+        Navigator.pushNamedAndRemoveUntil(
+            context, AppRoutes.splash, (route) => false);
+      }
+    } catch (e) {
+      debugPrint("Error resetting app data: $e");
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error resetting data: ${e.toString()}'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
+  }
+
+  /// Show dialog to edit water goal
+  void _editWaterGoal() {
+    final waterGoalController =
+        TextEditingController(text: _waterGoalMl.toString());
 
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Change Password'),
-        content: const Column(
-          mainAxisSize: MainAxisSize.min,
-          children: inputFields,
+        title: const Text('Edit Water Goal'),
+        content: TextField(
+          controller: waterGoalController,
+          decoration: const InputDecoration(
+            labelText: 'Daily Water Goal (ml)',
+            border: OutlineInputBorder(),
+          ),
+          keyboardType: TextInputType.number,
         ),
         actions: [
           TextButton(
@@ -902,127 +863,139 @@ class _ProfileScreenState extends State<ProfileScreen>
             child: const Text('Cancel'),
           ),
           ElevatedButton(
-            onPressed: () {
-              // Implement password change
+            onPressed: () async {
+              final String inputText = waterGoalController.text;
+              final int? newGoal = int.tryParse(inputText);
+
+              if (newGoal == null || newGoal <= 0) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text(
+                        'Please enter a valid positive number for water goal.'),
+                    backgroundColor: Colors.red,
+                  ),
+                );
+                return;
+              }
+
+              // Save to SharedPreferences
+              final prefs = await SharedPreferences.getInstance();
+              await prefs.setInt('user_water_goal_ml', newGoal);
+
+              // Update local state and UI
+              setState(() {
+                _waterGoalMl = newGoal;
+              });
+
               Navigator.pop(context);
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Password updated successfully')),
+                const SnackBar(
+                  content: Text('Water goal updated successfully'),
+                  backgroundColor: Colors.green,
+                ),
               );
             },
-            child: const Text('Update'),
+            child: const Text('Save'),
           ),
         ],
       ),
     );
   }
 
-  void _showUnitSelector() {
-    showDialog(
+  /// Show confirmation dialog before deleting account
+  Future<void> _showDeleteAccountDialog() async {
+    final confirmed = await showDialog<bool>(
       context: context,
-      builder: (context) => SimpleDialog(
-        title: const Text('Select Unit System'),
-        children: [
-          RadioListTile<String>(
-            title: const Text('Metric (kg, cm)'),
-            value: 'Metric',
-            groupValue: _selectedUnit,
-            onChanged: (value) {
-              if (value != null) {
-                setState(() => _selectedUnit = value);
-                _saveUnitPreference(value).then((_) {
-                  _loadUserData(); // Refresh UI
-                  _updateControllers(); // Update controller values
-                });
-                Navigator.pop(context);
-              }
-            },
+      barrierDismissible: false, // User must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Delete Your Account?'),
+          content: const SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('This action is permanent and cannot be undone.'),
+                Text(
+                    'All your account data, including personal information, logs, and settings will be permanently deleted.'),
+              ],
+            ),
           ),
-          RadioListTile<String>(
-            title: const Text('Imperial (lb, inch)'),
-            value: 'Imperial',
-            groupValue: _selectedUnit,
-            onChanged: (value) {
-              if (value != null) {
-                setState(() => _selectedUnit = value);
-                _saveUnitPreference(value).then((_) {
-                  _loadUserData(); // Refresh UI
-                  _updateControllers(); // Update controller values
-                });
-                Navigator.pop(context);
-              }
-            },
-          ),
-        ],
-      ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop(false); // Return false
+              },
+            ),
+            TextButton(
+              style: TextButton.styleFrom(foregroundColor: Colors.red),
+              child: const Text('Delete Account'),
+              onPressed: () {
+                Navigator.of(context).pop(true); // Return true
+              },
+            ),
+          ],
+        );
+      },
     );
+
+    // If user confirmed, proceed with account deletion
+    if (confirmed == true) {
+      await _deleteAccount();
+    }
   }
 
-  // Add method to save preference
-  Future<void> _saveUnitPreference(String unit) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('user_unit_preference', unit);
-    debugPrint("Unit preference saved: $unit");
-    // Reload data to apply unit changes to display immediately
-    _loadUserData();
-  }
+  /// Perform the actual account deletion
+  Future<void> _deleteAccount() async {
+    try {
+      // Show loading indicator
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        },
+      );
 
-  void _showHelpSupport() {
-    const supportOptions = [
-      ListTile(
-        leading: Icon(Icons.help_outline),
-        title: Text('FAQ'),
-      ),
-      ListTile(
-        leading: Icon(Icons.email),
-        title: Text('Contact Support'),
-        subtitle: Text('support@calnutripal.com'),
-      ),
-      ListTile(
-        leading: Icon(Icons.feedback),
-        title: Text('Send Feedback'),
-      ),
-    ];
+      // 1. Call service to delete user data
+      final userProvider = Provider.of<UserProvider>(context, listen: false);
+      await userProvider.clearUserData();
 
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Help & Support'),
-        content: const Column(
-          mainAxisSize: MainAxisSize.min,
-          children: supportOptions,
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Close'),
+      // 2. Clear other local data
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.clear();
+
+      // 3. Clear database
+      final dbHelper = DatabaseHelper();
+      await dbHelper.clearAllData();
+
+      // Remove loading dialog
+      if (mounted) {
+        Navigator.pop(context);
+      }
+
+      // 4. Navigate to login/onboarding screen
+      if (mounted) {
+        Navigator.pushNamedAndRemoveUntil(
+            context, AppRoutes.splash, (route) => false);
+      }
+    } catch (e) {
+      // Remove loading dialog if error
+      if (mounted) {
+        Navigator.pop(context);
+      }
+
+      debugPrint("Error deleting account: $e");
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error deleting account: ${e.toString()}'),
+            backgroundColor: Colors.red,
           ),
-        ],
-      ),
-    );
-  }
-
-  void _showAboutInfo() {
-    showAboutDialog(
-      context: context,
-      applicationName: 'CalNutriPal',
-      applicationVersion: '1.0.0',
-      applicationIcon: const Icon(
-        Icons.local_dining,
-        size: 50,
-        color: AppTheme.primaryColor,
-      ),
-      children: const [
-        SizedBox(height: 16),
-        Text(
-          'CalNutriPal helps you track your nutrition and reach your health goals with personalized recommendations.',
-        ),
-        SizedBox(height: 16),
-        Text(
-          '© 2023 CalNutriPal Team. All rights reserved.',
-          style: TextStyle(fontSize: 12),
-        ),
-      ],
-    );
+        );
+      }
+    }
   }
 
   /// Show dialog to edit nutrition goals
@@ -1392,150 +1365,113 @@ class _ProfileScreenState extends State<ProfileScreen>
     );
   }
 
-  /// Show confirmation dialog before resetting data
-  Future<void> _showResetConfirmationDialog() async {
-    final confirmed = await showDialog<bool>(
-      context: context,
-      barrierDismissible: false, // User must tap button!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Reset All App Data?'),
-          content: const SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text('This action is irreversible.'),
-                Text(
-                    'All your logged meals, food items, stats, and goals will be permanently deleted.'),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('Cancel'),
-              onPressed: () {
-                Navigator.of(context).pop(false); // Return false
-              },
-            ),
-            TextButton(
-              style: TextButton.styleFrom(foregroundColor: Colors.red),
-              child: const Text('Reset Data'),
-              onPressed: () {
-                Navigator.of(context).pop(true); // Return true
-              },
-            ),
-          ],
-        );
-      },
-    );
-
-    // If user confirmed, proceed with reset
-    if (confirmed == true) {
-      await _resetAppData();
-    }
-  }
-
-  /// Perform the actual data reset
-  Future<void> _resetAppData() async {
-    try {
-      // Show loading indicator (optional)
-      // Consider showing a loading overlay while clearing
-
-      // 1. Clear SharedPreferences
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.remove('user_stats');
-      await prefs.remove('nutrition_goals');
-      await prefs.remove('has_completed_onboarding');
-      // Add any other keys you store in SharedPreferences here
-      debugPrint("SharedPreferences cleared.");
-
-      // 2. Clear SQLite Database
-      final dbHelper = DatabaseHelper();
-      await dbHelper.clearAllData();
-
-      // 3. Reset relevant providers (optional, as navigation will rebuild anyway)
-      // Provider.of<UserStatsProvider>(context, listen: false).initialize();
-      // Provider.of<NutritionGoalsProvider>(context, listen: false).initialize();
-      // Provider.of<NutritionLogProvider>(context, listen: false).initialize();
-
-      // 4. Navigate back to the beginning
-      if (mounted) {
-        // Navigate to Splash which will then route to onboarding
-        Navigator.pushNamedAndRemoveUntil(
-            context, AppRoutes.splash, (route) => false);
-      }
-    } catch (e) {
-      debugPrint("Error resetting app data: $e");
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Error resetting data: ${e.toString()}'),
-            backgroundColor: Colors.red,
-          ),
-        );
-      }
-    }
-  }
-
-  /// Show dialog to edit water goal
-  void _editWaterGoal() {
-    final waterGoalController =
-        TextEditingController(text: _waterGoalMl.toString());
+  void _showHelpSupport() {
+    const supportOptions = [
+      ListTile(
+        leading: Icon(Icons.help_outline),
+        title: Text('FAQ'),
+      ),
+      ListTile(
+        leading: Icon(Icons.email),
+        title: Text('Contact Support'),
+        subtitle: Text('support@calnutripal.com'),
+      ),
+      ListTile(
+        leading: Icon(Icons.feedback),
+        title: Text('Send Feedback'),
+      ),
+    ];
 
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Edit Water Goal'),
-        content: TextField(
-          controller: waterGoalController,
-          decoration: const InputDecoration(
-            labelText: 'Daily Water Goal (ml)',
-            border: OutlineInputBorder(),
-          ),
-          keyboardType: TextInputType.number,
+        title: const Text('Help & Support'),
+        content: const Column(
+          mainAxisSize: MainAxisSize.min,
+          children: supportOptions,
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
-          ),
-          ElevatedButton(
-            onPressed: () async {
-              final String inputText = waterGoalController.text;
-              final int? newGoal = int.tryParse(inputText);
-
-              if (newGoal == null || newGoal <= 0) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text(
-                        'Please enter a valid positive number for water goal.'),
-                    backgroundColor: Colors.red,
-                  ),
-                );
-                return;
-              }
-
-              // Save to SharedPreferences
-              final prefs = await SharedPreferences.getInstance();
-              await prefs.setInt('user_water_goal_ml', newGoal);
-
-              // Update local state and UI
-              setState(() {
-                _waterGoalMl = newGoal;
-              });
-
-              Navigator.pop(context);
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Water goal updated successfully'),
-                  backgroundColor: Colors.green,
-                ),
-              );
-            },
-            child: const Text('Save'),
+            child: const Text('Close'),
           ),
         ],
       ),
     );
+  }
+
+  void _showAboutInfo() {
+    showAboutDialog(
+      context: context,
+      applicationName: 'CalNutriPal',
+      applicationVersion: '1.0.0',
+      applicationIcon: const Icon(
+        Icons.local_dining,
+        size: 50,
+        color: AppTheme.primaryColor,
+      ),
+      children: const [
+        SizedBox(height: 16),
+        Text(
+          'CalNutriPal helps you track your nutrition and reach your health goals with personalized recommendations.',
+        ),
+        SizedBox(height: 16),
+        Text(
+          '© 2023 CalNutriPal Team. All rights reserved.',
+          style: TextStyle(fontSize: 12),
+        ),
+      ],
+    );
+  }
+
+  void _showUnitSelector() {
+    showDialog(
+      context: context,
+      builder: (context) => SimpleDialog(
+        title: const Text('Select Unit System'),
+        children: [
+          RadioListTile<String>(
+            title: const Text('Metric (kg, cm)'),
+            value: 'Metric',
+            groupValue: _selectedUnit,
+            onChanged: (value) {
+              if (value != null) {
+                setState(() => _selectedUnit = value);
+                _saveUnitPreference(value).then((_) {
+                  _loadUserData(); // Refresh UI
+                  _updateControllers(); // Update controller values
+                });
+                Navigator.pop(context);
+              }
+            },
+          ),
+          RadioListTile<String>(
+            title: const Text('Imperial (lb, inch)'),
+            value: 'Imperial',
+            groupValue: _selectedUnit,
+            onChanged: (value) {
+              if (value != null) {
+                setState(() => _selectedUnit = value);
+                _saveUnitPreference(value).then((_) {
+                  _loadUserData(); // Refresh UI
+                  _updateControllers(); // Update controller values
+                });
+                Navigator.pop(context);
+              }
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  // Add method to save preference
+  Future<void> _saveUnitPreference(String unit) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('user_unit_preference', unit);
+    debugPrint("Unit preference saved: $unit");
+    // Reload data to apply unit changes to display immediately
+    _loadUserData();
   }
 
   @override

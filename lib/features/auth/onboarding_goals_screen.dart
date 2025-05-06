@@ -10,6 +10,7 @@ import 'package:cal_nutri_pal/core/services/user_stats_provider.dart';
 import 'package:cal_nutri_pal/core/services/main_app_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cal_nutri_pal/core/services/app_routes.dart';
+import 'package:cal_nutri_pal/features/auth/privacy_terms_screen.dart';
 
 /// Onboarding screen for setting nutrition goals
 class OnboardingGoalsScreen extends StatefulWidget {
@@ -806,8 +807,6 @@ class _OnboardingGoalsScreenState extends State<OnboardingGoalsScreen> {
       try {
         final goalProvider =
             Provider.of<NutritionGoalsProvider>(context, listen: false);
-        final mainController =
-            Provider.of<MainAppController>(context, listen: false);
 
         // Create nutrition goals object
         final nutritionGoals = NutritionGoals(
@@ -823,17 +822,45 @@ class _OnboardingGoalsScreenState extends State<OnboardingGoalsScreen> {
         // Set selected goal type
         goalProvider.setGoalType(_selectedGoalType);
 
-        // Mark onboarding as complete
-        await mainController.completeOnboarding();
-
-        // Set onboarding complete flag
-        final prefs = await SharedPreferences.getInstance();
-        await prefs.setBool('has_completed_onboarding', true);
+        setState(() {
+          _isLoading = false;
+        });
 
         if (mounted) {
-          // Navigate to main app and clear history
-          Navigator.pushNamedAndRemoveUntil(
-              context, AppRoutes.main, (route) => false);
+          // Show privacy terms screen before completing
+          final result = await Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => PrivacyTermsScreen(
+                onComplete: (accepted) {
+                  Navigator.of(context).pop(accepted);
+                },
+              ),
+            ),
+          );
+
+          // Only complete onboarding if privacy terms were accepted
+          if (result == true) {
+            setState(() {
+              _isLoading = true;
+            });
+
+            final mainController =
+                Provider.of<MainAppController>(context, listen: false);
+
+            // Mark onboarding as complete
+            await mainController.completeOnboarding();
+
+            // Set onboarding complete flag
+            final prefs = await SharedPreferences.getInstance();
+            await prefs.setBool('has_completed_onboarding', true);
+            await prefs.setBool('has_accepted_privacy_terms', true);
+
+            if (mounted) {
+              // Navigate to main app and clear history
+              Navigator.pushNamedAndRemoveUntil(
+                  context, AppRoutes.main, (route) => false);
+            }
+          }
         }
       } catch (e) {
         setState(() {
@@ -851,14 +878,39 @@ class _OnboardingGoalsScreenState extends State<OnboardingGoalsScreen> {
     });
 
     try {
-      // Set onboarding complete flag
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setBool('has_completed_onboarding', true);
+      setState(() {
+        _isLoading = false;
+      });
 
       if (mounted) {
-        // Navigate to main app and clear history
-        Navigator.pushNamedAndRemoveUntil(
-            context, AppRoutes.main, (route) => false);
+        // Show privacy terms screen before skipping
+        final result = await Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => PrivacyTermsScreen(
+              onComplete: (accepted) {
+                Navigator.of(context).pop(accepted);
+              },
+            ),
+          ),
+        );
+
+        // Only complete onboarding if privacy terms were accepted
+        if (result == true) {
+          setState(() {
+            _isLoading = true;
+          });
+
+          // Set onboarding complete flag
+          final prefs = await SharedPreferences.getInstance();
+          await prefs.setBool('has_completed_onboarding', true);
+          await prefs.setBool('has_accepted_privacy_terms', true);
+
+          if (mounted) {
+            // Navigate to main app and clear history
+            Navigator.pushNamedAndRemoveUntil(
+                context, AppRoutes.main, (route) => false);
+          }
+        }
       }
     } catch (e) {
       // Handle errors if saving default goals
