@@ -47,9 +47,6 @@ class _AddMealScreenState extends State<AddMealScreen> {
   String? _errorMessage;
   bool _showSuccess = false;
 
-  // File for image (null if no image is selected)
-  File? _foodImage;
-
   // Auto-validation mode
   AutovalidateMode _autovalidateMode = AutovalidateMode.disabled;
 
@@ -183,8 +180,8 @@ class _AddMealScreenState extends State<AddMealScreen> {
               ),
 
             // Food image section
-            _buildImageSection(),
-            const SizedBox(height: 24),
+            // _buildImageSection(),
+            // const SizedBox(height: 24),
 
             // Basic info section
             _buildSectionHeader('Basic Information'),
@@ -576,53 +573,6 @@ class _AddMealScreenState extends State<AddMealScreen> {
     );
   }
 
-  // Build image section
-  Widget _buildImageSection() {
-    return Center(
-      child: GestureDetector(
-        onTap: _pickImage,
-        child: Container(
-          width: 120,
-          height: 120,
-          decoration: BoxDecoration(
-            color: Colors.grey.shade100,
-            shape: BoxShape.circle,
-            border: Border.all(
-              color: Colors.grey.shade300,
-              width: 2,
-            ),
-            image: _foodImage != null
-                ? DecorationImage(
-                    image: FileImage(_foodImage!),
-                    fit: BoxFit.cover,
-                  )
-                : null,
-          ),
-          child: _foodImage == null
-              ? Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.camera_alt,
-                      size: 40,
-                      color: Colors.grey.shade400,
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      'Add Photo',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey.shade500,
-                      ),
-                    ),
-                  ],
-                )
-              : null,
-        ),
-      ),
-    );
-  }
-
   // Build success view
   Widget _buildSuccessView() {
     return Center(
@@ -737,64 +687,6 @@ class _AddMealScreenState extends State<AddMealScreen> {
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  // Pick image from camera or gallery
-  void _pickImage() {
-    // Show bottom sheet with camera and gallery options
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext context) {
-        return SafeArea(
-          child: Wrap(
-            children: [
-              ListTile(
-                leading: const Icon(Icons.photo_camera),
-                title: const Text('Take a Photo'),
-                onTap: () {
-                  Navigator.pop(context);
-                  // TODO: Implement camera integration
-                  _showImagePlaceholder(
-                      'Camera integration will be implemented here.');
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.photo_library),
-                title: const Text('Choose from Gallery'),
-                onTap: () {
-                  Navigator.pop(context);
-                  // TODO: Implement gallery integration
-                  _showImagePlaceholder(
-                      'Gallery integration will be implemented here.');
-                },
-              ),
-              if (_foodImage != null)
-                ListTile(
-                  leading: const Icon(Icons.delete, color: Colors.red),
-                  title: const Text('Remove Photo',
-                      style: TextStyle(color: Colors.red)),
-                  onTap: () {
-                    Navigator.pop(context);
-                    setState(() {
-                      _foodImage = null;
-                    });
-                  },
-                ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-  // Show placeholder for image functions
-  void _showImagePlaceholder(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        duration: const Duration(seconds: 2),
       ),
     );
   }
@@ -934,7 +826,6 @@ class _AddMealScreenState extends State<AddMealScreen> {
     _selectedMealTypeIndex = 0;
     _selectedDateTime = DateTime.now();
     _errorMessage = null;
-    _foodImage = null;
     _autovalidateMode = AutovalidateMode.disabled;
   }
 }

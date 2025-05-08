@@ -69,11 +69,6 @@ class _SplashScreenState extends State<SplashScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Spacer(flex: 2),
-                Image.asset(
-                  'assets/images/app_logo.png',
-                  width: 150,
-                  height: 150,
-                ),
                 const SizedBox(height: 20),
                 const Text(
                   'CalNutriPal',

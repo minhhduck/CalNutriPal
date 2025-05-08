@@ -24,7 +24,7 @@ class _ProfileScreenState extends State<ProfileScreen>
     with AutomaticKeepAliveClientMixin {
   // User data
   String _userName = 'User';
-  String? _userAvatarUrl;
+  // String? _userAvatarUrl; // Removed
   bool _isDarkMode = false;
   bool _notificationsEnabled = true;
   String _selectedUnit = 'Metric';
@@ -279,43 +279,44 @@ class _ProfileScreenState extends State<ProfileScreen>
       color: Colors.white,
       child: Column(
         children: [
-          GestureDetector(
-            onTap: _selectProfileImage,
-            child: Stack(
-              alignment: Alignment.bottomRight,
-              children: [
-                CircleAvatar(
-                  radius: 50,
-                  backgroundColor: AppTheme.primaryColor,
-                  backgroundImage: _userAvatarUrl != null
-                      ? NetworkImage(_userAvatarUrl!) as ImageProvider
-                      : null,
-                  child: _userAvatarUrl == null
-                      ? Text(
-                          _getInitials(_userName),
-                          style: const TextStyle(
-                            fontSize: 36,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        )
-                      : null,
+          // GestureDetector(
+          //   onTap: _selectProfileImage, // This would call the problematic functionality
+          //   child: Stack(
+          //     alignment: Alignment.bottomRight,
+          //     children: [
+          CircleAvatar(
+              radius: 50,
+              backgroundColor: AppTheme.primaryColor,
+              // backgroundImage: _userAvatarUrl != null
+              //     ? NetworkImage(_userAvatarUrl!) as ImageProvider
+              //     : null,
+              // child: _userAvatarUrl == null
+              //     ? Text(
+              child: Text(
+                // Always show initials now
+                _getInitials(_userName),
+                style: const TextStyle(
+                  fontSize: 36,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
                 ),
-                Container(
-                  padding: const EdgeInsets.all(4),
-                  decoration: const BoxDecoration(
-                    color: AppTheme.primaryColor,
-                    shape: BoxShape.circle,
-                  ),
-                  child: const Icon(
-                    Icons.camera_alt,
-                    size: 20,
-                    color: Colors.white,
-                  ),
-                ),
-              ],
-            ),
-          ),
+              )
+              //     : null,
+              ),
+          //     Container(
+          //       padding: const EdgeInsets.all(4),
+          //       decoration: const BoxDecoration(
+          //         color: AppTheme.primaryColor,
+          //         shape: BoxShape.circle,
+          //       ),
+          //       child: const Icon(
+          //         Icons.camera_alt,
+          //         size: 20,
+          //         color: Colors.white,
+          //       ),
+          //     ),
+          //   ],
+          // ),
           const SizedBox(height: 16),
           Text(
             _userName,
@@ -328,7 +329,7 @@ class _ProfileScreenState extends State<ProfileScreen>
           OutlinedButton.icon(
             onPressed: _editProfile,
             icon: const Icon(Icons.edit),
-            label: const Text('Edit Profile'),
+            label: const Text('Edit Name'),
             style: OutlinedButton.styleFrom(
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
               shape: RoundedRectangleBorder(
@@ -354,51 +355,51 @@ class _ProfileScreenState extends State<ProfileScreen>
     return initials.toUpperCase();
   }
 
-  void _selectProfileImage() {
-    showModalBottomSheet(
-      context: context,
-      builder: (context) => SafeArea(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ListTile(
-              leading: const Icon(Icons.photo_camera),
-              title: const Text('Take a photo'),
-              onTap: () {
-                Navigator.pop(context);
-                // Implement camera functionality
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.photo_library),
-              title: const Text('Choose from gallery'),
-              onTap: () {
-                Navigator.pop(context);
-                // Implement gallery selection
-              },
-            ),
-            if (_userAvatarUrl != null)
-              ListTile(
-                leading: const Icon(Icons.delete, color: Colors.red),
-                title: const Text('Remove photo',
-                    style: TextStyle(color: Colors.red)),
-                onTap: () {
-                  Navigator.pop(context);
-                  setState(() => _userAvatarUrl = null);
-                },
-              ),
-          ],
-        ),
-      ),
-    );
-  }
+  // void _selectProfileImage() { // Entire method removed
+  //   showModalBottomSheet(
+  //     context: context,
+  //     builder: (context) => SafeArea(
+  //       child: Column(
+  //         mainAxisSize: MainAxisSize.min,
+  //         children: [
+  //           ListTile(
+  //             leading: const Icon(Icons.photo_camera),
+  //             title: const Text('Take a photo'),
+  //             onTap: () {
+  //               Navigator.pop(context);
+  //               // Implement camera functionality
+  //             },
+  //           ),
+  //           ListTile(
+  //             leading: const Icon(Icons.photo_library),
+  //             title: const Text('Choose from gallery'),
+  //             onTap: () {
+  //               Navigator.pop(context);
+  //               // Implement gallery selection
+  //             },
+  //           ),
+  //           if (_userAvatarUrl != null)
+  //             ListTile(
+  //               leading: const Icon(Icons.delete, color: Colors.red),
+  //               title: const Text('Remove photo',
+  //                   style: TextStyle(color: Colors.red)),
+  //               onTap: () {
+  //                 Navigator.pop(context);
+  //                 setState(() => _userAvatarUrl = null);
+  //               },
+  //             ),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
 
   void _editProfile() {
     // Show edit profile dialog or navigate to edit profile screen
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Edit Profile'),
+        title: const Text('Edit Name'),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
